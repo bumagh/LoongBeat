@@ -49,6 +49,10 @@ export class Outline extends NodeRef
         this.isContact = true;
         this.tweenAnim.stop();
         EventManager.Emit("OnBallLeaveDoor", this.node, selfCollider, otherCollider, contact);
+        this.scheduleOnce(() =>
+        {
+            this.node.removeFromParent();
+        });
     }
 }
 

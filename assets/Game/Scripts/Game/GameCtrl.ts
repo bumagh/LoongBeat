@@ -37,18 +37,18 @@ export class GameCtrl extends Component
     {
         //todo 音效 分数 生成新的圈 球增大 相机变远
 
+        this.gameUICtrl.UpdateBallScale();
         this.scheduleOnce(() =>
         {
             this.gameUICtrl.UpdateBallScore();
             this.nextScale = this.nextScale * 2;
             this.gameUICtrl.CreateOutline(this.nextScale);
             this.gameUICtrl.MiniCamera(2);
-            node.removeFromParent();
-            this.gameUICtrl.UpdateBallScale();
         });
     }
     private OnGameTouchEnd(proxy: TouchEventProxy, event: EventTouch)
     {
+
         this.gameUICtrl.BallBeat();
     }
 }
