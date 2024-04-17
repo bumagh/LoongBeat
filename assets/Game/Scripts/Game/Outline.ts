@@ -1,8 +1,8 @@
 import { _decorator, BoxCollider2D, Collider2D, Component, Contact2DType, IPhysics2DContact, Node, Quat, Tween, tween, Vec2, Vec3 } from 'cc';
 import { NodeRef } from '../Common/NodeRef';
-import { EventManager } from '../../../Library/EventManager';
-import { Debug } from '../../../Library/Debug';
-import { Algorithm } from '../../../Library/Algorithm';
+import { Algorithm } from '../../../Libraries/Algorithm';
+import { EventManager } from '../../../Libraries/EventManager';
+
 const { ccclass, property } = _decorator;
 
 @ccclass('Outline')
@@ -35,9 +35,7 @@ export class Outline extends NodeRef
     {
         this.node.angle = Algorithm.GetRandomNumber(360, 0);
     }
-    update(deltaTime: number)
-    {
-    }
+
     private StartCircleAnim(node: Node): void
     {
         this.tweenAnim = tween(node)
@@ -50,11 +48,7 @@ export class Outline extends NodeRef
         if (this.isContact == true) return;
         this.isContact = true;
         this.tweenAnim.stop();
-        EventManager.Emit("OnBallLeaveDoor", selfCollider, otherCollider, contact);
-        this.scheduleOnce(() =>
-        {
-            this.node.removeFromParent();
-        }, 0.2);
+        EventManager.Emit("OnBallLeaveDoor", this.node, selfCollider, otherCollider, contact);
     }
 }
 

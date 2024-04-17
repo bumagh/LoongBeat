@@ -1,8 +1,9 @@
-import { _decorator, Component, EventTouch, Node } from 'cc';
-import { EventManager } from '../../../Library/EventManager';
+import { _decorator, Collider2D, Component, EventTouch, IPhysics2DContact, Node } from 'cc';
 import { TouchEventProxy } from '../Common/TouchEventProxy';
 import { GameUICtrl } from './GameUICtrl';
 import { Ball } from './Ball';
+import { EventManager } from '../../../Libraries/EventManager';
+import { Debug } from '../../../Libraries/Debug';
 const { ccclass, property } = _decorator;
 
 @ccclass('GameCtrl')
@@ -10,7 +11,7 @@ export class GameCtrl extends Component
 {
     @property(GameUICtrl)
     private gameUICtrl: GameUICtrl;
-    private nextScale: number = 2;
+    private nextScale: number = 4;
     protected onLoad(): void
     {
         EventManager.On("OnGameTouchEnd", this.OnGameTouchEnd, this);
@@ -24,21 +25,27 @@ export class GameCtrl extends Component
     start()
     {
 
-        // for (let index = 0; index < 8; index++) {
-        //     this.gameUICtrl.CreateOutline(index+3);
-        // }
+        this.gameUICtrl.CreateOutline(1);
+        this.gameUICtrl.CreateOutline(2);
+        this.gameUICtrl.CreateOutline(4);
     }
 
     /**
      * 顺利从圈里出来
      */
-    private OnBallLeaveDoor()
+    private OnBallLeaveDoor(node: Node, selfCollider: Collider2D, otherCollider: Collider2D, contact: IPhysics2DContact | null)
     {
         //todo 音效 分数 生成新的圈 球增大 相机变远
-        this.gameUICtrl.UpdateBallScore();
-        this.nextScale = this.nextScale + 1;
-        this.gameUICtrl.CreateOutline(this.nextScale);
-        this.gameUICtrl.MiniCamera();
+
+        this.scheduleOnce(() =>
+        {
+            this.gameUICtrl.UpdateBallScore();
+            this.nextScale = this.nextScale * 2;
+            this.gameUICtrl.CreateOutline(this.nextScale);
+            this.gameUICtrl.MiniCamera(2);
+            node.removeFromParent();
+            this.gameUICtrl.UpdateBallScale();
+        });
     }
     private OnGameTouchEnd(proxy: TouchEventProxy, event: EventTouch)
     {

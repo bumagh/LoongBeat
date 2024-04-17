@@ -1,4 +1,4 @@
-import { _decorator, Camera, Component, instantiate, Node, Prefab, Vec2, Vec3 } from 'cc';
+import { _decorator, Camera, Component, easing, instantiate, Node, Prefab, tween, Vec2, Vec3 } from 'cc';
 import { NodeRef } from '../Common/NodeRef';
 import { Ball } from './Ball';
 import { Outline } from './Outline';
@@ -20,9 +20,12 @@ export class GameUICtrl extends NodeRef
     {
 
     }
-    public MiniCamera(mini: boolean = true)
+    public MiniCamera(scale: number = 1)
     {
-        this.camera.orthoHeight = this.camera.orthoHeight + (mini ? 1 : -1)*100;
+        // this.camera.orthoHeight = this.camera.orthoHeight * scale;
+        tween(this.camera)
+            .to(2, { orthoHeight: this.camera.orthoHeight * scale }, { 'easing': 'smooth' })
+            .start();
     }
     update(deltaTime: number)
     {
@@ -36,14 +39,18 @@ export class GameUICtrl extends NodeRef
     {
         this.heroBall.UpdateTipScore();
     }
-
+    public UpdateBallScale()
+    {
+        this.heroBall.UpdateBallScale();
+    }
     public CreateOutline(scale: number = 1.2)
     {
         var outlineNode: Node = instantiate(this.outlinePrefab);
-        outlineNode.setParent(this.GetNode("GameRoot"));
+        this.GetNode("GameRoot").addChild(outlineNode);
         var outline: Outline = outlineNode.getComponent<Outline>(Outline);
         outline.SetSpriteNodeScale(scale);
         outline.SetNodeAngle();
+
     }
 }
 

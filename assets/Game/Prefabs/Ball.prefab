@@ -237,13 +237,13 @@
     "__prefab": {
       "__id__": 10
     },
-    "enabledContactListener": true,
-    "bullet": false,
+    "enabledContactListener": false,
+    "bullet": true,
     "awakeOnLoad": true,
     "_group": 1,
     "_type": 2,
     "_allowSleep": true,
-    "_gravityScale": 1,
+    "_gravityScale": 0,
     "_linearDamping": 0,
     "_angularDamping": 0,
     "_linearVelocity": {
@@ -336,7 +336,7 @@
     },
     "_contentSize": {
       "__type__": "cc.Size",
-      "width": 31.345703125,
+      "width": 72.3642578125,
       "height": 54.4
     },
     "_anchorPoint": {
@@ -375,8 +375,8 @@
     "_string": "label",
     "_horizontalAlign": 1,
     "_verticalAlign": 1,
-    "_actualFontSize": 12,
-    "_fontSize": 12,
+    "_actualFontSize": 30,
+    "_fontSize": 30,
     "_fontFamily": "Arial",
     "_lineHeight": 40,
     "_overflow": 0,
@@ -486,7 +486,6 @@
       "__id__": 0
     },
     "fileId": "2eSXZNlxVFcYcJacTLSiGa",
-    "instance": null,
     "targetOverrides": null
   }
 ]

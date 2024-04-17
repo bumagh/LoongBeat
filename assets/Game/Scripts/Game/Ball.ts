@@ -43,15 +43,15 @@ export class Ball extends NodeRef
     {
         var point = new Vec2();
         this.rgBody.getLocalCenter(point);
-        this.rgBody.applyLinearImpulse(new Vec2(0, 10), point, true);
+        this.rgBody.applyLinearImpulse(new Vec2(0, 10 * this.node.scale.x), point, true);
     }
-    private StartCircleAnim(node: Node): void
+    public UpdateBallScale()
     {
-        tween(node)
-            .by(0.02, {
-                angle: 1
-            }).repeatForever().start();
+        // this.ballSpriteNode.setScale(new Vec3(this.ballSpriteNode.scale.x*1.5,));
+        this.node.setScale(new Vec3(this.node.scale.x * 2, this.node.scale.y * 2, 1));
+        this.rgBody.gravityScale = this.rgBody.gravityScale / (2);
     }
+
     updateTextPosition()
     {
         // 获取目标节点的世界坐标

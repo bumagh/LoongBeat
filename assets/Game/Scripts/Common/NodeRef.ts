@@ -1,6 +1,7 @@
 import { _decorator, CCString, Component, find, Node } from 'cc';
-import { Debug } from '../../../Library/Debug';
-import { Validator } from '../../../Library/Validator';
+import { Debug } from '../../../Libraries/Debug';
+import { Validator } from '../../../Libraries/Validator';
+
 
 const { ccclass, property, executionOrder } = _decorator;
 

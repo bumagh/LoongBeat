@@ -1,6 +1,7 @@
 import { _decorator, CCBoolean, CCString, Component, EventTouch } from 'cc';
-import { EventManager } from '../../../Library/EventManager';
-import { Validator } from '../../../Library/Validator';
+import { Validator } from '../../../Libraries/Validator';
+import { EventManager } from '../../../Libraries/EventManager';
+
 
 const { ccclass, property } = _decorator;
 

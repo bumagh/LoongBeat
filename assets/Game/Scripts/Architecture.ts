@@ -1,5 +1,5 @@
 import { _decorator, assetManager, CCString, Component, director } from 'cc';
-import { Debug } from '../../Library/Debug';
+import { Debug } from '../../Libraries/Debug';
 
 const { ccclass, property, executionOrder } = _decorator;
 
