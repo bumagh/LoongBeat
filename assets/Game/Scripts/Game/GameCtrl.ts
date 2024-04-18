@@ -13,22 +13,22 @@ export class GameCtrl extends Component
     @property(GameUICtrl)
     private gameUICtrl: GameUICtrl;
     private nextScale: number = 4;
+    public level: number = 1;
     protected onLoad(): void
     {
-        EventManager.On("OnGameTouchEnd", this.OnGameTouchEnd, this);
+        EventManager.On("OnGameTouched", this.OnGameTouched, this);
         EventManager.On("OnBallLeaveDoor", this.OnBallLeaveDoor, this);
     }
     protected onDestroy(): void
     {
-        EventManager.Off("OnGameTouchEnd", this.OnGameTouchEnd, this);
+        EventManager.Off("OnGameTouched", this.OnGameTouched, this);
         EventManager.Off("OnBallLeaveDoor", this.OnBallLeaveDoor, this);
     }
     start()
     {
-
-        // this.gameUICtrl.CreateOutline(1);
-        // this.gameUICtrl.CreateOutline(2);
-        // this.gameUICtrl.CreateOutline(4);
+        this.gameUICtrl.CreateOutline(1);
+        this.gameUICtrl.CreateOutline(2);
+        this.gameUICtrl.CreateOutline(4);
     }
 
     /**
@@ -40,17 +40,39 @@ export class GameCtrl extends Component
 
         this.scheduleOnce(() =>
         {
+            this.level = this.level + 1;
             this.gameUICtrl.UpdateBallPos();
+
             // this.gameUICtrl.UpdateBallScale();
             this.gameUICtrl.UpdateBallScore();
             this.nextScale = this.nextScale * 2;
             // this.gameUICtrl.CreateOutline(this.nextScale);
-            // this.gameUICtrl.MiniCamera(2);
+            this.gameUICtrl.MiniCamera();
+            if (this.level % 3 == 0)
+            {
+                //生成新的
+                this.gameUICtrl.CreateOutline(1);
+                this.gameUICtrl.CreateOutline(2);
+            }
         });
     }
-    private OnGameTouchEnd(proxy: TouchEventProxy, event: EventTouch)
+    private OnGameTouched(proxy: TouchEventProxy, event: EventTouch)
     {
+        switch (proxy.eventArg)
+        {
+            case 'touch-move':
+                Debug.Log("touchmove")
+                break;
+            case 'touch-end':
+                Debug.Log("touchend")
+                break;
+            case 'touch-start':
 
+                break;
+
+            default:
+                break;
+        }
         this.gameUICtrl.BallBeat();
     }
 }

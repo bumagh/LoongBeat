@@ -1,14 +1,18 @@
-import { _decorator, Component, Label, Node, Quat, RigidBody2D, tween, Vec2, Vec3 } from 'cc';
+import { _decorator, Camera, Component, find, Label, Node, NodeSpace, Quat, RigidBody2D, tween, Vec2, Vec3 } from 'cc';
 import { NodeRef } from '../Common/NodeRef';
 const { ccclass, property } = _decorator;
 
 @ccclass('Ball')
 export class Ball extends NodeRef
 {
-    private ballSpriteNode: Node;
+    public ballSpriteNode: Node;
     private rgBody: RigidBody2D;
     private tipLabel: Label;
     private _score: number = -1;
+    private angle: number = 0; // 当前角度
+    private speed: number = 30; // 当前角度
+    private radius: number = 2; // 当前角度
+
     public get score(): number
     {
         return this._score;
@@ -36,12 +40,29 @@ export class Ball extends NodeRef
     update(deltaTime: number)
     {
         this.updateTextPosition();
+        // this.angle += this.speed * deltaTime;
+
+        // // 计算刚体的目标位置（圆周运动轨迹上的点）
+        // const targetPosition = new Vec2(this.radius * Math.cos(this.angle), this.radius * Math.sin(this.angle)
+        // );
+
+        // // 计算朝向圆心的向量
+        // const direction = targetPosition.subtract(new Vec2(this.ballSpriteNode.position.x, this.ballSpriteNode.position.y)).normalize();
+
+        // // 计算冲量大小（使刚体保持圆周运动）
+        // const impulseMagnitude = this.rgBody.getMass() * this.speed * this.radius;
+
+        // // 应用冲量给刚体
+        // this.rgBody.applyLinearImpulse(direction.multiplyScalar(impulseMagnitude), new Vec2(this.ballSpriteNode.position.x, this.ballSpriteNode.position.y), true);
+        // find("Canvas/Camera").getComponent<Camera>(Camera).conve
+
     }
-    public BallBeat(): void
+    public BallBeat(vec3: Vec3): void
     {
         var point = new Vec2();
         this.rgBody.getLocalCenter(point);
-        this.rgBody.applyLinearImpulse(new Vec2(0, 10 * this.node.scale.x), point, true);
+        // this.rgBody.applyLinearImpulse(new Vec2(0, 10 * this.node.scale.x), point, true);
+        this.rgBody.applyLinearImpulse(new Vec2(vec3.x, vec3.y), point, true);
     }
     public UpdateBallScale()
     {
