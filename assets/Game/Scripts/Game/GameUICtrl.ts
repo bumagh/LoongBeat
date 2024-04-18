@@ -7,6 +7,7 @@ const { ccclass, property } = _decorator;
 @ccclass('GameUICtrl')
 export class GameUICtrl extends NodeRef
 {
+
     @property(Prefab)
     private outlinePrefab: Prefab;
     private heroBall: Ball;
@@ -24,12 +25,13 @@ export class GameUICtrl extends NodeRef
     {
         // this.camera.orthoHeight = this.camera.orthoHeight * scale;
         tween(this.camera)
-            .to(2, { orthoHeight: this.camera.orthoHeight * scale }, { 'easing': 'smooth' })
+            .to(1, { orthoHeight: this.camera.orthoHeight * scale }, { 'easing': 'smooth' })
+            .to(1, { orthoHeight: this.camera.orthoHeight}, { 'easing': 'smooth' })
             .start();
     }
-    update(deltaTime: number)
+    public UpdateBallPos()
     {
-
+        this.heroBall.UpdateBallPos();
     }
     public BallBeat()
     {

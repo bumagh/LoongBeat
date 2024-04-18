@@ -8,7 +8,7 @@ export class Ball extends NodeRef
     private ballSpriteNode: Node;
     private rgBody: RigidBody2D;
     private tipLabel: Label;
-    private _score: number = 0;
+    private _score: number = -1;
     public get score(): number
     {
         return this._score;
@@ -25,15 +25,13 @@ export class Ball extends NodeRef
     }
     start()
     {
-        this.UpdateTipScore("0");
+        this.UpdateTipScore();
     }
 
-    public UpdateTipScore(scoreStr: string = "0")
+    public UpdateTipScore(scoreNum: number = 0)
     {
-        if (scoreStr != "0")
-            this.score = this.score + 1;
-        scoreStr = scoreStr == "0" ? this.score.toString() : scoreStr;
-        this.tipLabel.string = `1:${scoreStr}分`;
+        this.score = scoreNum == 0 ? (this.score + 1) : scoreNum;
+        this.tipLabel.string = `1:${this.score.toString()}分`;
     }
     update(deltaTime: number)
     {
@@ -51,11 +49,14 @@ export class Ball extends NodeRef
         this.node.setScale(new Vec3(this.node.scale.x * 2, this.node.scale.y * 2, 1));
         this.rgBody.gravityScale = this.rgBody.gravityScale / (2);
     }
-
+    public UpdateBallPos()
+    {
+        this.ballSpriteNode.position = new Vec3(0, 0, 0);
+    }
     updateTextPosition()
     {
         // 获取目标节点的世界坐标
-        const pos = this.ballSpriteNode.position;
+        const pos = new Vec3(this.ballSpriteNode.position.x, this.ballSpriteNode.position.y + 30, 0);
         // 将目标节点的世界坐标转换为文本节点的局部坐标
         // 更新文本节点的位置
         this.tipLabel.node.setPosition(pos);

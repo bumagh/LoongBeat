@@ -9,13 +9,13 @@ const { ccclass, property } = _decorator;
 export class Outline extends NodeRef
 {
     public outlineSpriteNode: Node;
-    private doorCollider: BoxCollider2D;
+    private doorCollider: Collider2D;
     private tweenAnim: Tween<Node>;
-    private isContact: boolean = false;
+    public isContact: boolean = false;
     protected onLoad(): void
     {
         this.outlineSpriteNode = this.GetNode("OutlineSprite");
-        this.doorCollider = this.GetVisual("OutlineSprite/Door", BoxCollider2D);
+        this.doorCollider = this.GetVisual("OutlineSprite/Door", Collider2D);
         this.doorCollider.on(Contact2DType.END_CONTACT, this.onEndContact, this);
     }
     protected onDestroy(): void
@@ -45,13 +45,14 @@ export class Outline extends NodeRef
     }
     onEndContact(selfCollider: Collider2D, otherCollider: Collider2D, contact: IPhysics2DContact | null)
     {
-        if (this.isContact == true) return;
-        this.isContact = true;
-        this.tweenAnim.stop();
+        // if (this.isContact == true) return;
+        // this.isContact = true;
+        // this.tweenAnim.stop();
+        this.SetNodeAngle();
         EventManager.Emit("OnBallLeaveDoor", this.node, selfCollider, otherCollider, contact);
         this.scheduleOnce(() =>
         {
-            this.node.removeFromParent();
+            // this.node.removeFromParent();
         });
     }
 }

@@ -4,6 +4,7 @@ import { GameUICtrl } from './GameUICtrl';
 import { Ball } from './Ball';
 import { EventManager } from '../../../Libraries/EventManager';
 import { Debug } from '../../../Libraries/Debug';
+import { Outline } from './Outline';
 const { ccclass, property } = _decorator;
 
 @ccclass('GameCtrl')
@@ -25,9 +26,9 @@ export class GameCtrl extends Component
     start()
     {
 
-        this.gameUICtrl.CreateOutline(1);
-        this.gameUICtrl.CreateOutline(2);
-        this.gameUICtrl.CreateOutline(4);
+        // this.gameUICtrl.CreateOutline(1);
+        // this.gameUICtrl.CreateOutline(2);
+        // this.gameUICtrl.CreateOutline(4);
     }
 
     /**
@@ -37,13 +38,14 @@ export class GameCtrl extends Component
     {
         //todo 音效 分数 生成新的圈 球增大 相机变远
 
-        this.gameUICtrl.UpdateBallScale();
         this.scheduleOnce(() =>
         {
+            this.gameUICtrl.UpdateBallPos();
+            // this.gameUICtrl.UpdateBallScale();
             this.gameUICtrl.UpdateBallScore();
             this.nextScale = this.nextScale * 2;
-            this.gameUICtrl.CreateOutline(this.nextScale);
-            this.gameUICtrl.MiniCamera(2);
+            // this.gameUICtrl.CreateOutline(this.nextScale);
+            // this.gameUICtrl.MiniCamera(2);
         });
     }
     private OnGameTouchEnd(proxy: TouchEventProxy, event: EventTouch)
